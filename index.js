@@ -23,7 +23,7 @@ async function run() {
     const taskCollection = client.db("tasks").collection("task");
 
     // ========= Show API =======
-    app.get("/product", async (req, res) => {
+    app.get("/tasks", async (req, res) => {
       const query = {};
       const cursor = taskCollection.find(query);
       const product = await cursor.toArray();

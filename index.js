@@ -48,6 +48,24 @@ async function run() {
       res.send(result);
     });
 
+    // ============= Complete API ======
+    // ========= Update Product API =======
+    app.put("/update/:id", async (req, res) => {
+      const { name, task, isComplete } = req.body;
+      const newData = {
+        $set: {
+          name,
+          task,
+          isComplete,
+        },
+      };
+      const id = req.params;
+      const query = { _id: ObjectID(id) };
+      const options = { upsert: true };
+      const result = await taskCollection.updateOne(query, newData, options);
+      res.send(result);
+    });
+
     //
   } finally {
   }

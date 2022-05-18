@@ -40,7 +40,7 @@ async function run() {
       res.send(product);
     });
 
-    // ========= Delete Product API =======
+    // ========= Delete Task API =======
     app.delete("/delete/:id", async (req, res) => {
       const id = req.params;
       const query = { _id: ObjectID(id) };
@@ -49,7 +49,6 @@ async function run() {
     });
 
     // ============= Complete API ======
-    // ========= Update Product API =======
     app.put("/update/:id", async (req, res) => {
       const { name, task, isComplete } = req.body;
       const newData = {

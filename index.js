@@ -4,6 +4,7 @@ require("dotenv").config();
 const port = process.env.PORT || 5000;
 const app = express();
 const { MongoClient, ServerApiVersion } = require("mongodb");
+const { ObjectID } = require("bson");
 
 // ============ Middleware ======
 app.use(cors());
@@ -22,14 +23,6 @@ async function run() {
     await client.connect();
     const taskCollection = client.db("tasks").collection("task");
 
-    // ========= Show API =======
-    app.get("/tasks", async (req, res) => {
-      const query = {};
-      const cursor = taskCollection.find(query);
-      const product = await cursor.toArray();
-      res.send(product);
-    });
-
     // ========= Add API =======
     app.post("/add", async (req, res) => {
       const data = req.body;
@@ -37,9 +30,9 @@ async function run() {
       res.send({ result });
     });
 
-    // ========= Specific User Product API =======
+    // ========= Specific User Data API =======
     app.get("/userTask", async (req, res) => {
-      const uid = req.headers.uid;
+      const uid = req.headers.authorization;
 
       const query = { uid: uid };
       const cursor = await taskCollection.find(query);
